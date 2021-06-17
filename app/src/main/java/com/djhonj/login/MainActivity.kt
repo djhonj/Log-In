@@ -13,8 +13,13 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.buttonSingup.setOnClickListener {
-            startActivity(Intent(this, RegisterActivity::class.java))
+        val bundle = intent.extras
+        val user: User? = bundle?.getSerializable("user") as User?
+
+        if (user == null) {
+            startActivity(Intent(this, LoginActivity::class.java))
         }
+
+        binding.tvText.setText(user!!.name)
     }
 }
