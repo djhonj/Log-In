@@ -2,8 +2,9 @@
     <string name="app_name">Log In</string>
     <string name="user_name">Nombre usuario</string>
     <string name="name">Nombre</string>
-    <string name="password">Contrasena</string>
+    <string name="password">Contraseña</string>
     <string name="create_account">Crear cuenta</string>
-    <string name="log_in">Log in</string>
-    <string name="sing_up">Sing up</string>
+    <string name="log_in">Iniciar sesión</string>
+    <string name="sing_up">Registrarse</string>
+    <string name="close_session">Cerrar sesión</string>
 </resources>

@@ -51,7 +51,7 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun createAccount(user: User) {
         lifecycleScope.launch {
-            App.dbRoom.userDao().insertUser(user)
+            App.dbRoom.userDao().insertUser(user.apply { session = true })
         }
 
         val intent = Intent(this, MainActivity::class.java).apply { putExtra("user", user) }

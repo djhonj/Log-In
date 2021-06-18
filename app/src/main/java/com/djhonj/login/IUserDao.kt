@@ -11,8 +11,11 @@ interface IUserDao {
     @Query("select * from User")
     suspend fun getUserAll(): List<User>
 
-    @Query("select * from User where Id = :id")
-    suspend fun getUser(id: String): User
+    @Query("select * from User where UserName = :userName")
+    suspend fun getUser(userName: String): User
+
+    @Query("select * from User where UserName = :userName and Password = :password")
+    suspend fun getUser(userName: String, password: String): User
 
     @Insert
     suspend fun insertUser(user: User)
@@ -20,6 +23,6 @@ interface IUserDao {
     @Update
     suspend fun updateUser(user: User)
 
-    @Delete
-    suspend fun deleteUser(user: User)
+    //@Delete
+    // fun deleteUser(user: User)
 }
