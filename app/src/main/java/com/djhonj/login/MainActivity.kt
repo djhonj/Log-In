@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
 import com.djhonj.login.databinding.ActivityMainBinding
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -16,18 +16,23 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val bundle = intent.extras
-        user = bundle?.getSerializable("user") as User
+        runBlocking {
+            user = getUser(intent.extras?.getString("userName")!!)
+        }
 
         if (user == null) {
             startActivity(Intent(this, LoginActivity::class.java))
         }
 
-        binding.tvText.setText("Bienvenido ${user!!.name}!!!")
+        binding.tvText.setText("Bienvenido ${user.name}!!!")
 
         binding.buttonClose.setOnClickListener {
             closeSession(user)
         }
+    }
+
+    private suspend fun getUser(userName: String): User {
+        return App.dbRoom.userDao().getUser(userName)
     }
 
     private fun closeSession(user: User) {
@@ -39,3 +44,4 @@ class MainActivity : AppCompatActivity() {
         startActivity(Intent(this, LoginActivity::class.java))
     }
 }
+

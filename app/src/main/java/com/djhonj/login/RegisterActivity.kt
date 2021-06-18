@@ -27,7 +27,7 @@ class RegisterActivity : AppCompatActivity() {
                 val name = binding.etName.text.toString()
                 val userName = binding.etUser.text.toString()
                 val password = binding.etPassword.text.toString()
-                val newUser = User(0, name, userName, password)
+                val newUser = User(name = name, userName = userName, password = password)
 
                 lifecycleScope.launch {
                     val users: List<User> = App.dbRoom.userDao().getUserAll()
@@ -54,7 +54,7 @@ class RegisterActivity : AppCompatActivity() {
             App.dbRoom.userDao().insertUser(user.apply { session = true })
         }
 
-        val intent = Intent(this, MainActivity::class.java).apply { putExtra("user", user) }
+        val intent = Intent(this, MainActivity::class.java).apply { putExtra("userName", user.userName) }
         startActivity(intent)
     }
 

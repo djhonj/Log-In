@@ -60,7 +60,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun initSession(user: User) {
         val intent = Intent(this, MainActivity::class.java).apply {
-            putExtra("user", user)
+            putExtra("userName", user.userName)
         }
 
         startActivity(intent)
