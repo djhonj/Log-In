@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:focusable="true"
         android:hint="@string/user_name"
+        android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,12 +39,12 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="8dp"
         android:text="@string/log_in"
-        app:layout_constraintVertical_bias=".05"
-        app:layout_constraintTop_toBottomOf="@id/etPassword"
-        app:layout_constraintEnd_toStartOf="@id/buttonSingup"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/buttonSingup"
         app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etPassword"
+        app:layout_constraintVertical_bias=".05" />
 
     <Button
         android:id="@+id/buttonSingup"
@@ -51,10 +52,10 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:text="@string/sing_up"
-        app:layout_constraintTop_toBottomOf="@id/etPassword"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias=".05"
-        app:layout_constraintStart_toEndOf="@id/buttonLogin" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/buttonLogin"
+        app:layout_constraintTop_toBottomOf="@id/etPassword"
+        app:layout_constraintVertical_bias=".05" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
