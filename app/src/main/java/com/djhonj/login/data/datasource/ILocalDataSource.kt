@@ -7,5 +7,5 @@ interface ILocalDataSource {
 //    fun getUser(userName: String): User
 //    fun getUser(userName: String, password: String): User
     suspend fun insertUser(user: User)
-//    fun updateUser(user: User)
+    suspend fun updateUser(user: User)
 }

@@ -4,16 +4,12 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import androidx.lifecycle.lifecycleScope
 import com.djhonj.login.domain.User
 import com.djhonj.login.databinding.ActivityRegisterBinding
-import com.djhonj.login.framework.LoginApp
-import com.djhonj.login.framework.data.toRoomUser
+import com.djhonj.login.framework.ui.common.IView
 import com.djhonj.login.framework.ui.main.MainActivity
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
-class RegisterActivity : AppCompatActivity(), IRegisterView {
+class RegisterActivity : AppCompatActivity(), IView {
     private lateinit var binding: ActivityRegisterBinding
     private val presenter = RegisterPresenter(this)
 
@@ -46,8 +42,9 @@ class RegisterActivity : AppCompatActivity(), IRegisterView {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-    override fun goActivity(user: com.djhonj.login.domain.User) {
-        val intent = Intent(this, MainActivity::class.java).apply { putExtra("userName", user.userName) }
+    override fun startActivity(user: User) {
+        val intent =
+            Intent(this, MainActivity::class.java).apply { putExtra("userName", user.userName) }
         startActivity(intent)
     }
 }

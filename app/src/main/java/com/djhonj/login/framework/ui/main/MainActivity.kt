@@ -3,43 +3,30 @@ package com.djhonj.login.framework.ui.main
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.lifecycle.lifecycleScope
 import com.djhonj.login.framework.ui.login.LoginActivity
-import com.djhonj.login.framework.data.database.User
+import com.djhonj.login.domain.User
 import com.djhonj.login.databinding.ActivityMainBinding
-import com.djhonj.login.framework.LoginApp
-import kotlinx.coroutines.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), IMainView {
     private lateinit var binding: ActivityMainBinding
     private lateinit var user: User
+    private val presenter = MainPresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //runBlocking {
-            //user = getUser(intent.extras?.getString("userName")!!)
-        //}
+        user = presenter.getUser(intent.extras!!.get("userName").toString())!!
 
-        //if (user == null) {
-            //startActivity(Intent(this, LoginActivity::class.java))
-        //}
-
-        //binding.tvText.setText("Bienvenido ${user.name}!!!")
+        binding.tvText.setText("Bienvenido ${user.name}!!!")
 
         binding.buttonClose.setOnClickListener {
-            closeSession(user)
+            presenter.closeSession(user)
         }
     }
 
-    private fun closeSession(user: User) {
-        lifecycleScope.launch {
-            //LoginApp.dbRoom.userDao().updateUser(user.apply { session = false })
-            //LoginApp.dbRoom.userDao().getUser(user.userName)
-        }
-
+    override fun startActivity() {
         startActivity(Intent(this, LoginActivity::class.java))
     }
 }

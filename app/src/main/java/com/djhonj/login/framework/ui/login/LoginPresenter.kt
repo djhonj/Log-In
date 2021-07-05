@@ -5,15 +5,15 @@ import android.content.Context
 import com.djhonj.login.data.repository.UserRepository
 import com.djhonj.login.domain.User
 import com.djhonj.login.framework.LoginApp
-import com.djhonj.login.framework.data.database.AppDbRoom
 import com.djhonj.login.framework.data.database.RoomDataSource
+import com.djhonj.login.framework.ui.common.IView
 import com.djhonj.login.usecases.GetAllUser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class LoginPresenter(private val view: ILoginView) {
+class LoginPresenter(private val view: IView) {
     fun validateSession(userParam: User) {
         if (userParam.userName.isNullOrEmpty() || userParam.password.isNullOrEmpty()) {
             view.showMessage("Completar todos los campos")
@@ -28,7 +28,7 @@ class LoginPresenter(private val view: ILoginView) {
                     if (user == null) {
                         view.showMessage("Credenciales para inicio de sesión incorrectas")
                     } else {
-                        view.startSession(user)
+                        view.startActivity(user)
                     }
                 }
             }

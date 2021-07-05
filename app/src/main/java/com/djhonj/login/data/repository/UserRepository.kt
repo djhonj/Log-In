@@ -6,4 +6,5 @@ import com.djhonj.login.domain.User
 class UserRepository (private val localDataSource: ILocalDataSource) {
     suspend fun getAllUser(): List<User> = localDataSource.getAllUser()
     suspend fun createUser(user: User) = localDataSource.insertUser(user)
+    suspend fun updateUser(user: User) = localDataSource.updateUser(user)
 }

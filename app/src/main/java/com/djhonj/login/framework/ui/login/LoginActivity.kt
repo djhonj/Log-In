@@ -8,8 +8,9 @@ import com.djhonj.login.databinding.ActivityLoginBinding
 import com.djhonj.login.framework.ui.main.MainActivity
 import com.djhonj.login.framework.ui.register.RegisterActivity
 import com.djhonj.login.domain.User
+import com.djhonj.login.framework.ui.common.IView
 
-class LoginActivity : AppCompatActivity(), ILoginView {
+class LoginActivity : AppCompatActivity(), IView {
     private lateinit var binding: ActivityLoginBinding
     private val presenterLogin = LoginPresenter(this)
 
@@ -28,7 +29,7 @@ class LoginActivity : AppCompatActivity(), ILoginView {
         }
     }
 
-    override fun startSession(user: User) {
+    override fun startActivity(user: User) {
         val intent = Intent(this, MainActivity::class.java).apply {
             putExtra("userName", user.userName)
         }
