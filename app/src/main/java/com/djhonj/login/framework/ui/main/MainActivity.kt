@@ -1,10 +1,13 @@
-package com.djhonj.login
+package com.djhonj.login.framework.ui.main
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
+import com.djhonj.login.framework.ui.login.LoginActivity
+import com.djhonj.login.framework.data.database.User
 import com.djhonj.login.databinding.ActivityMainBinding
+import com.djhonj.login.framework.LoginApp
 import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
@@ -31,14 +34,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private suspend fun getUser(userName: String): User {
-        return App.dbRoom.userDao().getUser(userName)
+    private suspend fun getUser(userName: String): User? {
+        //return LoginApp.dbRoom.userDao().getUser(userName)
+        return null
     }
 
     private fun closeSession(user: User) {
         lifecycleScope.launch {
-            App.dbRoom.userDao().updateUser(user.apply { session = false })
-            App.dbRoom.userDao().getUser(user.userName)
+            //LoginApp.dbRoom.userDao().updateUser(user.apply { session = false })
+            //LoginApp.dbRoom.userDao().getUser(user.userName)
         }
 
         startActivity(Intent(this, LoginActivity::class.java))

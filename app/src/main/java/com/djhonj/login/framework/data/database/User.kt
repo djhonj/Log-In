@@ -1,4 +1,4 @@
-package com.djhonj.login
+package com.djhonj.login.framework.data.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

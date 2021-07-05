@@ -1,15 +1,14 @@
-package com.djhonj.login
+package com.djhonj.login.framework.ui.register
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
-import com.djhonj.login.R
+import com.djhonj.login.framework.data.database.User
 import com.djhonj.login.databinding.ActivityRegisterBinding
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
+import com.djhonj.login.framework.LoginApp
+import com.djhonj.login.framework.ui.main.MainActivity
 import kotlinx.coroutines.launch
 
 class RegisterActivity : AppCompatActivity() {
@@ -27,10 +26,14 @@ class RegisterActivity : AppCompatActivity() {
                 val name = binding.etName.text.toString()
                 val userName = binding.etUser.text.toString()
                 val password = binding.etPassword.text.toString()
-                val newUser = User(name = name, userName = userName, password = password)
+                val newUser = User(
+                    name = name,
+                    userName = userName,
+                    password = password
+                )
 
                 lifecycleScope.launch {
-                    val users: List<User> = App.dbRoom.userDao().getUserAll()
+                    val users: List<User> = LoginApp.dbRoom.userDao().getUserAll()
                     if (validateUser(newUser, users)) {
                         toast("Este usuario ya existe.")
                     } else {
@@ -51,7 +54,7 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun createAccount(user: User) {
         lifecycleScope.launch {
-            App.dbRoom.userDao().insertUser(user.apply { session = true })
+            LoginApp.dbRoom.userDao().insertUser(user.apply { session = true })
         }
 
         val intent = Intent(this, MainActivity::class.java).apply { putExtra("userName", user.userName) }
