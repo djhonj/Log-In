@@ -4,13 +4,10 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import androidx.lifecycle.lifecycleScope
 import com.djhonj.login.databinding.ActivityLoginBinding
-import com.djhonj.login.framework.LoginApp
 import com.djhonj.login.framework.ui.main.MainActivity
 import com.djhonj.login.framework.ui.register.RegisterActivity
 import com.djhonj.login.domain.User
-import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity(), ILoginView {
     private lateinit var binding: ActivityLoginBinding
@@ -21,10 +18,9 @@ class LoginActivity : AppCompatActivity(), ILoginView {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //validateSession(null)
-
         binding.buttonLogin.setOnClickListener {
-            presenterLogin.validateSession(binding.etUser.text.toString(), binding.etPassword.text.toString())
+            val user = User(null, null, binding.etUser.text.toString(), binding.etPassword.text.toString(), false)
+            presenterLogin.validateSession(user)
         }
 
         binding.buttonSingup.setOnClickListener {
@@ -41,6 +37,6 @@ class LoginActivity : AppCompatActivity(), ILoginView {
     }
 
     override fun showMessage(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT)
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }

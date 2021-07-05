@@ -5,14 +5,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
-import com.djhonj.login.framework.data.database.User
+import com.djhonj.login.domain.User
 import com.djhonj.login.databinding.ActivityRegisterBinding
 import com.djhonj.login.framework.LoginApp
+import com.djhonj.login.framework.data.toRoomUser
 import com.djhonj.login.framework.ui.main.MainActivity
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class RegisterActivity : AppCompatActivity() {
+class RegisterActivity : AppCompatActivity(), IRegisterView {
     private lateinit var binding: ActivityRegisterBinding
+    private val presenter = RegisterPresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,47 +24,30 @@ class RegisterActivity : AppCompatActivity() {
 
         binding.buttonCreate.setOnClickListener {
             if (binding.etName.text.isEmpty() || binding.etUser.text.isEmpty() || binding.etPassword.text.isEmpty()) {
-                toast("Completar todo el formulario")
+                showMessage("Completar todo el formulario")
             } else {
                 val name = binding.etName.text.toString()
                 val userName = binding.etUser.text.toString()
                 val password = binding.etPassword.text.toString()
                 val newUser = User(
+                    0,
                     name = name,
                     userName = userName,
-                    password = password
+                    password = password,
+                    session = false
                 )
 
-                lifecycleScope.launch {
-                    val users: List<User> = LoginApp.dbRoom.userDao().getUserAll()
-                    if (validateUser(newUser, users)) {
-                        toast("Este usuario ya existe.")
-                    } else {
-                        createAccount(newUser)
-                    }
-                }
+                presenter.validateUser(newUser)
             }
         }
     }
 
-    private fun validateUser(user: User, users: List<User>): Boolean {
-        if (users.size >= 1) {
-            if (users.find {it.userName == user.userName} != null) return  true
-        }
-
-        return false
+    override fun showMessage(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-    private fun createAccount(user: User) {
-        lifecycleScope.launch {
-            LoginApp.dbRoom.userDao().insertUser(user.apply { session = true })
-        }
-
+    override fun goActivity(user: com.djhonj.login.domain.User) {
         val intent = Intent(this, MainActivity::class.java).apply { putExtra("userName", user.userName) }
         startActivity(intent)
-    }
-
-    private fun toast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }

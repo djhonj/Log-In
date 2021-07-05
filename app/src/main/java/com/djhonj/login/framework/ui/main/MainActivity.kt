@@ -19,24 +19,19 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        runBlocking {
-            user = getUser(intent.extras?.getString("userName")!!)
-        }
+        //runBlocking {
+            //user = getUser(intent.extras?.getString("userName")!!)
+        //}
 
-        if (user == null) {
-            startActivity(Intent(this, LoginActivity::class.java))
-        }
+        //if (user == null) {
+            //startActivity(Intent(this, LoginActivity::class.java))
+        //}
 
-        binding.tvText.setText("Bienvenido ${user.name}!!!")
+        //binding.tvText.setText("Bienvenido ${user.name}!!!")
 
         binding.buttonClose.setOnClickListener {
             closeSession(user)
         }
-    }
-
-    private suspend fun getUser(userName: String): User? {
-        //return LoginApp.dbRoom.userDao().getUser(userName)
-        return null
     }
 
     private fun closeSession(user: User) {

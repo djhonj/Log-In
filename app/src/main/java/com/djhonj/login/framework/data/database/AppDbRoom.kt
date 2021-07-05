@@ -13,7 +13,7 @@ import com.djhonj.login.framework.data.database.User
 )
 abstract class AppDbRoom : RoomDatabase() {
     companion object {
-        fun build(context: Context) = Room.databaseBuilder(context, AppDbRoom::class.java, "login-db")
+        //fun build(context: Context) = Room.databaseBuilder(context, AppDbRoom::class.java, "login-db").build()
     }
 
     abstract fun userDao(): IUserDao
