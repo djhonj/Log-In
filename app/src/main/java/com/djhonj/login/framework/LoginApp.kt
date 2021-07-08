@@ -11,6 +11,6 @@ class LoginApp: Application() {
 
     override fun onCreate() {
         super.onCreate()
-        db = Room.databaseBuilder(this, AppDbRoom::class.java, "app-login").build()
+        db = Room.databaseBuilder(this, AppDbRoom::class.java, "db-login").build()
     }
 }

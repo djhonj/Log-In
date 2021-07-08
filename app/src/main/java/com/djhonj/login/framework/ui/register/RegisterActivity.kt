@@ -30,7 +30,7 @@ class RegisterActivity : AppCompatActivity(), IView {
                     name = name,
                     userName = userName,
                     password = password,
-                    session = false
+                    session = true
                 )
 
                 presenter.validateUser(newUser)
@@ -43,8 +43,10 @@ class RegisterActivity : AppCompatActivity(), IView {
     }
 
     override fun startActivity(user: User) {
-        val intent =
-            Intent(this, MainActivity::class.java).apply { putExtra("userName", user.userName) }
+        val intent = Intent(this, MainActivity::class.java).apply {
+            putExtra("userName", user.userName)
+        }
+
         startActivity(intent)
     }
 }

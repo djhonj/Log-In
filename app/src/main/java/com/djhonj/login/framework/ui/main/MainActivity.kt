@@ -17,9 +17,11 @@ class MainActivity : AppCompatActivity(), IMainView {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        user = presenter.getUser(intent.extras!!.get("userName").toString())!!
+        val userName = intent.extras?.let{ it.getString("userName")}
 
-        binding.tvText.setText("Bienvenido ${user.name}!!!")
+        user = presenter.getUser(userName!!)
+
+        binding.tvText.setText("Bienvenido ${user.name} !!")
 
         binding.buttonClose.setOnClickListener {
             presenter.closeSession(user)

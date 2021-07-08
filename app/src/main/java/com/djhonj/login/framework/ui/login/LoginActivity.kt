@@ -20,7 +20,7 @@ class LoginActivity : AppCompatActivity(), IView {
         setContentView(binding.root)
 
         binding.buttonLogin.setOnClickListener {
-            val user = User(null, null, binding.etUser.text.toString(), binding.etPassword.text.toString(), false)
+            val user = User(0, "", binding.etUser.text.toString(), binding.etPassword.text.toString(), false)
             presenterLogin.validateSession(user)
         }
 

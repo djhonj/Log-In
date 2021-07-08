@@ -9,13 +9,15 @@ import com.djhonj.login.usecases.GetAllUser
 import kotlinx.coroutines.*
 
 class MainPresenter(private val view: IMainView) {
-    fun closeSession(user: User) {
-        GlobalScope.launch(Dispatchers.IO) {
-            val job = launch {
-                CloseSession(UserRepository(RoomDataSource(LoginApp.db))).invoke(user.apply { session = false })
-            }
+    fun closeSession(user: User?) {
+        if (user == null) {
+            view.startActivity()
+        }
 
-            job.join()
+        GlobalScope.launch(Dispatchers.IO) {
+            launch {
+                CloseSession(UserRepository(RoomDataSource(LoginApp.db))).invoke(user!!.apply { session = false })
+            }.join()
 
             withContext(Dispatchers.Main) {
                 view.startActivity()
@@ -23,21 +25,23 @@ class MainPresenter(private val view: IMainView) {
         }
     }
 
-    fun getUser(userName: String): User? {
+    fun getUser(userName: String): User {
         var user: User? = null
+
+        if (userName.isNullOrEmpty()) {
+            view.startActivity()
+        }
 
         runBlocking {
             user = GetAllUser(UserRepository(RoomDataSource(LoginApp.db))).invoke().find {
                 userName == it.userName
             }
-
-
         }
 
         if (user == null) {
             view.startActivity()
         }
 
-        return user
+        return user!!
     }
 }
