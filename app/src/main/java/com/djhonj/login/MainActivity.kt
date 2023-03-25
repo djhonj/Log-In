@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
     private fun closeSession(user: User) {
         lifecycleScope.launch {
             App.dbRoom.userDao().updateUser(user.apply { session = false })
-            App.dbRoom.userDao().getUser(user.userName)
+            App.dbRoom.userDao().getUser(user.userName!!)
         }
 
         startActivity(Intent(this, LoginActivity::class.java))

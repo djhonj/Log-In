@@ -11,6 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import com.djhonj.login.domain.User as UserDomain
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
@@ -27,14 +28,14 @@ class RegisterActivity : AppCompatActivity() {
                 val name = binding.etName.text.toString()
                 val userName = binding.etUser.text.toString()
                 val password = binding.etPassword.text.toString()
-                val newUser = User(name = name, userName = userName, password = password)
+                val newUser = UserDomain(0, name = name, userName = userName, password = password)
 
                 lifecycleScope.launch {
                     val users: List<User> = App.dbRoom.userDao().getUserAll()
-                    if (validateUser(newUser, users)) {
+                    if (validateUser(newUser.toUserRoom(), users)) {
                         toast("Este usuario ya existe.")
                     } else {
-                        createAccount(newUser)
+                        createAccount(newUser.toUserRoom())
                     }
                 }
             }
@@ -60,5 +61,9 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun toast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun UserDomain.toUserRoom(): User {
+        return User(id, name, userName, password, session)
     }
 }

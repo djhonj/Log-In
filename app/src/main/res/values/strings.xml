@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Log In</string>
+    <string name="app_name">Log In (version 1)</string>
     <string name="user_name">Nombre usuario</string>
     <string name="name">Nombre</string>
     <string name="password">Contraseña</string>
